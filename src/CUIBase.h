@@ -11,14 +11,16 @@
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/string.h>
-#include <wx/stattext.h>
-#include <wx/gdicmn.h>
-#include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
+#include <wx/hyperlink.h>
+#include <wx/gdicmn.h>
+#include <wx/font.h>
+#include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/sizer.h>
+#include <wx/grid.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -32,12 +34,44 @@ class CMainFrameBase : public wxFrame
 	private:
 	
 	protected:
+		wxHyperlinkCtrl* m_hyperlink1;
+		wxStaticText* m_staticText1;
+		wxTextCtrl* m_textCtrlVSPrjPath;
+		wxButton* m_btnVSPrj;
+		wxButton* m_btnImport;
+		wxTextCtrl* m_textCtrlInfo;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnbtnVSPrjClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnbtnImportClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnGridEditorShown( wxGridEvent& event ) { event.Skip(); }
+		
+	
+	public:
+		wxGrid* m_grid_dir;
+		
+		CMainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("wxVSImport"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 935,759 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		
+		~CMainFrameBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class CMainFrameBase_BACK
+///////////////////////////////////////////////////////////////////////////////
+class CMainFrameBase_BACK : public wxFrame 
+{
+	private:
+	
+	protected:
+		wxHyperlinkCtrl* m_hyperlink1;
 		wxStaticText* m_staticText1;
 		wxTextCtrl* m_textCtrlVSPrjPath;
 		wxButton* m_btnVSPrj;
 		wxStaticText* m_staticText11;
 		wxTextCtrl* m_textCtrlSrcPath;
 		wxButton* m_btnSrcPath;
+		wxGrid* m_grid11;
 		wxButton* m_btnImport;
 		wxTextCtrl* m_textCtrlInfo;
 		
@@ -49,9 +83,9 @@ class CMainFrameBase : public wxFrame
 	
 	public:
 		
-		CMainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("wxVSImport"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 935,759 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		CMainFrameBase_BACK( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("wxVSImport"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 935,759 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
-		~CMainFrameBase();
+		~CMainFrameBase_BACK();
 	
 };
 
