@@ -87,6 +87,16 @@ CMainFrameBase::CMainFrameBase( wxWindow* parent, wxWindowID id, const wxString&
 	
 	this->SetSizer( bSizer1 );
 	this->Layout();
+	m_menubar1 = new wxMenuBar( 0 );
+	m_menu3 = new wxMenu();
+	wxMenuItem* m_menuItem5;
+	m_menuItem5 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("VC Project Editor") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem5 );
+	
+	m_menubar1->Append( m_menu3, wxT("Tools") ); 
+	
+	this->SetMenuBar( m_menubar1 );
+	
 	
 	this->Centre( wxBOTH );
 	
@@ -94,6 +104,7 @@ CMainFrameBase::CMainFrameBase( wxWindow* parent, wxWindowID id, const wxString&
 	m_btnVSPrj->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CMainFrameBase::OnbtnVSPrjClick ), NULL, this );
 	m_btnImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CMainFrameBase::OnbtnImportClick ), NULL, this );
 	m_grid_dir->Connect( wxEVT_GRID_EDITOR_SHOWN, wxGridEventHandler( CMainFrameBase::OnGridEditorShown ), NULL, this );
+	this->Connect( m_menuItem5->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( CMainFrameBase::OnMenuProjectEditorSelection ) );
 }
 
 CMainFrameBase::~CMainFrameBase()
@@ -102,6 +113,7 @@ CMainFrameBase::~CMainFrameBase()
 	m_btnVSPrj->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CMainFrameBase::OnbtnVSPrjClick ), NULL, this );
 	m_btnImport->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CMainFrameBase::OnbtnImportClick ), NULL, this );
 	m_grid_dir->Disconnect( wxEVT_GRID_EDITOR_SHOWN, wxGridEventHandler( CMainFrameBase::OnGridEditorShown ), NULL, this );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( CMainFrameBase::OnMenuProjectEditorSelection ) );
 	
 }
 
@@ -217,4 +229,81 @@ CMainFrameBase_BACK::~CMainFrameBase_BACK()
 	m_btnSrcPath->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CMainFrameBase_BACK::OnBtnSrcPathClick ), NULL, this );
 	m_btnImport->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CMainFrameBase_BACK::OnbtnImportClick ), NULL, this );
 	
+}
+
+CDialogTreeTestBase::CDialogTreeTestBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* bSizer12;
+	bSizer12 = new wxBoxSizer( wxVERTICAL );
+	
+	m_treeCtrl1 = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
+	bSizer12->Add( m_treeCtrl1, 1, wxALL|wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizer121;
+	bSizer121 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_textCtrlLoadPorject = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer121->Add( m_textCtrlLoadPorject, 1, wxALL|wxEXPAND, 5 );
+	
+	m_buttonLoad = new wxButton( this, wxID_ANY, wxT("Load VC Poject"), wxDefaultPosition, wxSize( 140,-1 ), 0 );
+	bSizer121->Add( m_buttonLoad, 0, wxALL, 5 );
+	
+	bSizer12->Add( bSizer121, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizer13;
+	bSizer13 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_textCtrlSaveFile = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer13->Add( m_textCtrlSaveFile, 1, wxALL, 5 );
+	
+	m_buttonSaveToFileBrowser = new wxButton( this, wxID_ANY, wxT("..."), wxDefaultPosition, wxSize( 30,-1 ), 0 );
+	m_buttonSaveToFileBrowser->SetDefault(); 
+	bSizer13->Add( m_buttonSaveToFileBrowser, 0, wxALL, 5 );
+	
+	m_buttonSaveToFile1 = new wxButton( this, wxID_ANY, wxT("Save To File"), wxDefaultPosition, wxSize( 100,-1 ), 0 );
+	m_buttonSaveToFile1->SetDefault(); 
+	bSizer13->Add( m_buttonSaveToFile1, 0, wxALL, 5 );
+	
+	bSizer12->Add( bSizer13, 0, wxEXPAND, 5 );
+	
+	this->SetSizer( bSizer12 );
+	this->Layout();
+	m_menu = new wxMenu();
+	wxMenuItem* m_menuItemDelete;
+	m_menuItemDelete = new wxMenuItem( m_menu, wxID_ANY, wxString( wxT("Delete") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu->Append( m_menuItemDelete );
+	
+	wxMenuItem* m_menuItemInster;
+	m_menuItemInster = new wxMenuItem( m_menu, wxID_ANY, wxString( wxT("Inster") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu->Append( m_menuItemInster );
+	
+	this->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( CDialogTreeTestBase::CDialogTreeTestBaseOnContextMenu ), NULL, this ); 
+	
+	
+	this->Centre( wxBOTH );
+	
+	// Connect Events
+	this->Connect( wxEVT_INIT_DIALOG, wxInitDialogEventHandler( CDialogTreeTestBase::OnInitDialog ) );
+	m_treeCtrl1->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( CDialogTreeTestBase::OnRightDown ), NULL, this );
+	m_buttonLoad->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CDialogTreeTestBase::OnButtonLoadClick ), NULL, this );
+	m_buttonSaveToFileBrowser->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CDialogTreeTestBase::OnButtonSaveBrowserClick ), NULL, this );
+	m_buttonSaveToFile1->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CDialogTreeTestBase::OnButtonSaveClick ), NULL, this );
+	this->Connect( m_menuItemDelete->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( CDialogTreeTestBase::OnMenuItemDel ) );
+	this->Connect( m_menuItemInster->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( CDialogTreeTestBase::OnMenuItemInster ) );
+}
+
+CDialogTreeTestBase::~CDialogTreeTestBase()
+{
+	// Disconnect Events
+	this->Disconnect( wxEVT_INIT_DIALOG, wxInitDialogEventHandler( CDialogTreeTestBase::OnInitDialog ) );
+	m_treeCtrl1->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( CDialogTreeTestBase::OnRightDown ), NULL, this );
+	m_buttonLoad->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CDialogTreeTestBase::OnButtonLoadClick ), NULL, this );
+	m_buttonSaveToFileBrowser->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CDialogTreeTestBase::OnButtonSaveBrowserClick ), NULL, this );
+	m_buttonSaveToFile1->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( CDialogTreeTestBase::OnButtonSaveClick ), NULL, this );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( CDialogTreeTestBase::OnMenuItemDel ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( CDialogTreeTestBase::OnMenuItemInster ) );
+	
+	delete m_menu; 
 }

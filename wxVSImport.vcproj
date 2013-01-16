@@ -209,12 +209,36 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="vc_parse"
+				>
+				<File
+					RelativePath=".\src\VCProjParse.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\VCProjParse.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="test"
+				>
+				<File
+					RelativePath=".\src\testDlg.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\src\testDlg.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"

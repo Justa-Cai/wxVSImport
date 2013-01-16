@@ -21,7 +21,13 @@
 #include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/grid.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
+#include <wx/menu.h>
 #include <wx/frame.h>
+#include <wx/treectrl.h>
+#include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -40,17 +46,20 @@ class CMainFrameBase : public wxFrame
 		wxButton* m_btnVSPrj;
 		wxButton* m_btnImport;
 		wxTextCtrl* m_textCtrlInfo;
+		wxMenuBar* m_menubar1;
+		wxMenu* m_menu3;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnbtnVSPrjClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnbtnImportClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnGridEditorShown( wxGridEvent& event ) { event.Skip(); }
+		virtual void OnMenuProjectEditorSelection( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
 		wxGrid* m_grid_dir;
 		
-		CMainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("wxVSImport"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 935,759 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		CMainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("wxVSImport"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 819,710 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~CMainFrameBase();
 	
@@ -86,6 +95,44 @@ class CMainFrameBase_BACK : public wxFrame
 		CMainFrameBase_BACK( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("wxVSImport"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 935,759 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~CMainFrameBase_BACK();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class CDialogTreeTestBase
+///////////////////////////////////////////////////////////////////////////////
+class CDialogTreeTestBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxTreeCtrl* m_treeCtrl1;
+		wxTextCtrl* m_textCtrlLoadPorject;
+		wxButton* m_buttonLoad;
+		wxTextCtrl* m_textCtrlSaveFile;
+		wxButton* m_buttonSaveToFileBrowser;
+		wxButton* m_buttonSaveToFile1;
+		wxMenu* m_menu;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnInitDialog( wxInitDialogEvent& event ) { event.Skip(); }
+		virtual void OnRightDown( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnButtonLoadClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonSaveBrowserClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonSaveClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMenuItemDel( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMenuItemInster( wxCommandEvent& event ) { event.Skip(); }
+		
+	
+	public:
+		
+		CDialogTreeTestBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("VCProject Edit & Source Import"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,600 ), long style = wxDEFAULT_DIALOG_STYLE|wxMAXIMIZE_BOX|wxMINIMIZE_BOX ); 
+		~CDialogTreeTestBase();
+		
+		void CDialogTreeTestBaseOnContextMenu( wxMouseEvent &event )
+		{
+			this->PopupMenu( m_menu, event.GetPosition() );
+		}
 	
 };
 

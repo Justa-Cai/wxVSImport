@@ -7,8 +7,9 @@
 #include "utils.h"
 #include "tinyxml.h"
 #include "tinystr.h"
+#include "testDlg.h"
 
-#define STR_VERSION "wxVSImport V 0.1"
+#define STR_VERSION "wxVSImport V 0.2"
 
 class MyApp: public wxApp
 {
@@ -17,7 +18,7 @@ public:
 };
 wxIMPLEMENT_APP(MyApp);
 
-
+/** @brief 导入文件夹的信息 */
 class CGridInfo
 {
 public:
@@ -287,11 +288,30 @@ public:
 		}
 	}
 
+	virtual void OnMenuProjectEditorSelection( wxCommandEvent& event ) 
+	{
+		CDialogTreeTest *pDlg = new CDialogTreeTest(NULL);
+		pDlg->ShowModal();
+		pDlg->Destroy();
+		delete pDlg;
+	}
+
 };
 
-
+//#define FUNC_DIALOG_TREE_TEST
 bool MyApp::OnInit()
 {
+#ifdef FUNC_DIALOG_TREE_TEST
+
+	CDialogTreeTest *pDlg = new CDialogTreeTest(NULL);
+	pDlg->ShowModal();
+	pDlg->Destroy();
+	delete pDlg;
+
+
+	return false;
+#endif
+
 	CMainFrame *frame = new CMainFrame(NULL);
 	frame->Show( true );
 	return true;
